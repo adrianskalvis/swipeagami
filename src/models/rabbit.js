@@ -31,14 +31,14 @@ export default function rabbit() {
   });
   b.turnOver('Turn over.');
   b.mountain({ line: [[50, 0], [50, 100]], moving: [70, 75], arrows: [[[72, 75], [28, 75]]], bend: 0.6 }, { text: 'Mountain-fold in half. The sides go back.', symbols: [{ t: 'rotate', at: [80, 90], deg: 90 }] });
-  // ---- Side view (hand-authored) ----
-  // Body: a triangle sitting on its base; ears and head at the front.
+  // ---- Side view (hand-authored): a sitting rabbit facing left ----
   const E = ['edge', 'edge', 'edge'];
-  const body = shape([[10, 80], [85, 80], [36, 30]], 'front', ['body'], ['edge', 'edge', 'edge']);
-  const head = (k) => shape([[36, 30], [20 + 8 * k, 44 - 2 * k], [26 + 4 * k, 56], [40, 52]], 'front', ['head'], ['fold', 'edge', 'edge', 'edge']);
-  const ear1 = (k) => shape([[36, 30], [30 - 2 * k, 30 - 24 * k], [42 - 2 * k, 32 - 22 * k]], 'front', ['ear'], E);
-  const ear2 = (k) => shape([[38, 32], [36 - 2 * k, 34 - 24 * k], [48 - 2 * k, 34 - 22 * k]], 'frontDark', ['ear'], E);
-  const tail = (k) => shape([[85, 80], [85 + 9 * k, 72 - 4 * k], [86 + 7 * k, 82]], 'front', ['tail'], E);
+  const body = shape([[24, 84], [88, 84], [82, 62], [62, 46], [38, 50]], 'front', ['body'], ['edge', 'edge', 'edge', 'fold', 'edge']);
+  // Head flap: starts as a point along the back, ends pointing down and forward.
+  const head = (k) => shape([[38, 50], [30 - 10 * k, 46 - 20 * (1 - k)], [18 - 2 * k, 58 - 14 * (1 - k)], [26, 66 - 10 * (1 - k)], [40, 62]], 'front', ['head'], ['fold', 'edge', 'edge', 'edge', 'edge']);
+  const ear1 = (k) => shape([[32, 50], [30 + 20 * (1 - k), 12 + 26 * (1 - k)], [40, 48]], 'front', ['ear'], E);
+  const ear2 = (k) => shape([[38, 51], [40 + 18 * (1 - k), 8 + 28 * (1 - k)], [46, 48]], 'frontDark', ['ear'], E);
+  const tail = (k) => shape([[88, 84], [88 + 8 * k, 72 + 6 * (1 - k)], [92 + 2 * k, 86]], 'front', ['tail'], E);
   const S0 = [body, head(0), ear2(0), ear1(0), tail(0)];
   const S1 = [body, head(0), ear2(1), ear1(1), tail(0)];
   b.custom({
@@ -47,7 +47,7 @@ export default function rabbit() {
     next: S1,
     frames: [S0, S1],
     tricky: true,
-    symbols: [{ t: 'arrow', from: [44, 36], to: [38, 6], bend: -0.3, tail: 'push' }],
+    symbols: [{ t: 'arrow', from: [52, 34], to: [36, 8], bend: -0.3, tail: 'push' }],
     minView: 100,
   });
   const S2 = [body, head(1), ear2(1), ear1(1), tail(0)];
@@ -57,7 +57,7 @@ export default function rabbit() {
     next: S2,
     frames: [S1, S2],
     tricky: true,
-    symbols: [{ t: 'valley', seg: [[36, 30], [40, 52]] }, { t: 'arrow', from: [16, 34], to: [24, 56], bend: 0.3, tail: 'push' }],
+    symbols: [{ t: 'valley', seg: [[38, 50], [26, 56]] }, { t: 'arrow', from: [16, 36], to: [14, 58], bend: 0.3, tail: 'push' }],
     minView: 100,
   });
   const S3 = [body, head(1), ear2(1), ear1(1), tail(1)];
@@ -67,7 +67,7 @@ export default function rabbit() {
     next: S3,
     frames: [S2, S3],
     tricky: true,
-    symbols: [{ t: 'valley', seg: [[78, 80], [85, 70]] }, { t: 'arrow', from: [92, 86], to: [92, 72], bend: -0.4, tail: 'push' }],
+    symbols: [{ t: 'valley', seg: [[82, 84], [88, 74]] }, { t: 'arrow', from: [96, 90], to: [98, 74], bend: -0.4, tail: 'push' }],
     minView: 100,
   });
   b.finish('The finished rabbit.', { minView: 100 });
