@@ -1,0 +1,22 @@
+{
+  "name": "swipegami",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Fold origami one swipe at a time. An offline PWA.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && node scripts/postbuild.mjs",
+    "preview": "vite preview",
+    "icons": "node scripts/icons.mjs",
+    "shots": "node scripts/screenshots.mjs",
+    "check:gestures": "node scripts/gestures.mjs",
+    "check:offline": "node scripts/offline.mjs",
+    "check:lighthouse": "node scripts/lighthouse.mjs",
+    "check": "npm run shots && npm run check:gestures && npm run check:offline && npm run check:lighthouse"
+  },
+  "devDependencies": {
+    "lighthouse": "^13.5.0",
+    "vite": "^8.3.5"
+  }
+}

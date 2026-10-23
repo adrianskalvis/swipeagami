@@ -1,0 +1,224 @@
+/* Swipegami design tokens and layout */
+:root {
+  --paper: #f5f1e8;
+  --paper-deep: #ece7db;
+  --card: #eeece6;
+  --ink: #1b1b1b;
+  --ink-soft: #6c6a64;
+  --ink-faint: #a09d95;
+  --rule: rgba(27, 27, 27, 0.14);
+  --seal: #c0392b;
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --sat: env(safe-area-inset-top, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left, 0px);
+  --sar: env(safe-area-inset-right, 0px);
+  --spring: cubic-bezier(0.2, 0.9, 0.3, 1.08);
+  color-scheme: light;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  height: 100%;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+body { position: fixed; inset: 0; overflow: hidden; touch-action: manipulation; }
+#app { position: absolute; inset: 0; overflow: hidden; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+button:focus-visible, [tabindex]:focus-visible { outline: 1.5px solid var(--seal); outline-offset: 3px; }
+svg { display: block; }
+
+.screen {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  padding: calc(var(--sat) + 12px) calc(var(--sar) + 20px) calc(var(--sab) + 16px) calc(var(--sal) + 20px);
+  background: var(--paper);
+}
+.scroll { overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
+
+/* Typography */
+.label {
+  font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-soft); font-weight: 500;
+}
+.title { font-size: 28px; font-weight: 300; letter-spacing: 0.02em; }
+.quiet { color: var(--ink-soft); font-size: 14px; font-weight: 300; line-height: 1.45; }
+.hairline { height: 1px; background: var(--rule); }
+.seal { color: var(--seal); }
+
+/* Splash */
+.splash { align-items: center; justify-content: center; text-align: center; gap: 14px; }
+.splash .mark { width: 72px; height: 72px; }
+.splash .name { font-size: 15px; letter-spacing: 0.42em; text-transform: uppercase; font-weight: 400; padding-left: 0.42em; }
+.splash .line { font-size: 22px; font-weight: 300; opacity: 0; transform: translateY(6px); transition: opacity 500ms ease, transform 500ms ease; }
+.splash .line.in { opacity: 1; transform: none; }
+.fade-in { animation: fadein 600ms ease both; }
+@keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
+
+/* Top bar */
+.topbar { display: flex; align-items: center; justify-content: space-between; height: 44px; flex: none; }
+.topbar .brand { font-size: 12px; letter-spacing: 0.34em; text-transform: uppercase; font-weight: 500; padding-left: 0.34em; }
+.chip {
+  display: inline-flex; align-items: center; gap: 8px; height: 30px; padding: 0 12px 0 8px;
+  border: 1px solid var(--rule); border-radius: 15px; font-size: 12px; color: var(--ink); letter-spacing: 0.02em; white-space: nowrap;
+}
+.chip .sw { width: 14px; height: 14px; border-radius: 3px; border: 1px solid rgba(0,0,0,0.18); }
+.iconbtn { width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; color: var(--ink-soft); border-radius: 20px; }
+.iconbtn svg { width: 20px; height: 20px; }
+
+/* Picker */
+.picker h1 { font-size: 22px; font-weight: 300; margin: 18px 0 4px; letter-spacing: 0.01em; }
+.picker .sub { margin-bottom: 18px; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding-bottom: 20px; }
+.pcard {
+  display: flex; flex-direction: column; align-items: stretch; gap: 8px;
+  padding: 12px 12px 10px; background: var(--card); border-radius: 14px; border: 1px solid transparent; text-align: left; min-height: 150px;
+  transition: transform 160ms ease, border-color 160ms ease;
+}
+.pcard:active { transform: scale(0.97); }
+.pcard.selected { border-color: var(--ink); }
+.pcard .pname { font-size: 14px; font-weight: 400; line-height: 1.25; }
+.pcard .pdim { font-size: 11px; color: var(--ink-soft); letter-spacing: 0.04em; }
+.pcard svg { width: 100%; height: 86px; }
+.pcard .pp-phone { fill: none; stroke: var(--ink-faint); stroke-width: 1; }
+.pcard .pp-sheet { fill: #fff; stroke: var(--ink); stroke-width: 1.2; }
+.pcard .pp-sheet.rect { fill: #fff; }
+.swatches { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; padding: 6px 0 20px; }
+.swatch { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 10px 0; border-radius: 14px; }
+.swatch .dot { width: 58px; height: 58px; border-radius: 12px; border: 1px solid rgba(0,0,0,0.14); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.4); }
+.swatch span { font-size: 12px; color: var(--ink-soft); letter-spacing: 0.08em; text-transform: uppercase; }
+.swatch:active .dot { transform: scale(0.95); }
+.sizenote { padding: 16px 0 6px; font-size: 18px; font-weight: 300; line-height: 1.4; }
+.sizenote .warn { display: block; margin-top: 10px; font-size: 13px; color: var(--ink-soft); }
+.primary {
+  display: block; width: 100%; height: 50px; border-radius: 25px; border: 1px solid var(--ink); font-size: 14px; letter-spacing: 0.16em; text-transform: uppercase; margin-top: 18px;
+}
+.primary.filled { background: var(--ink); color: var(--paper); }
+.primary:active { transform: scale(0.98); }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.custom-size { padding: 8px 0 16px; }
+.custom-size .cm { font-size: 20px; font-weight: 300; margin-bottom: 8px; }
+.custom-size input[type=range] { width: 100%; accent-color: var(--ink); }
+
+/* Home path */
+.home .path { padding: 8px 0 40px; }
+.level { position: relative; padding: 22px 0 22px 28px; }
+.level::before { content: ""; position: absolute; left: 7px; top: 0; bottom: 0; border-left: 1px dashed var(--rule); }
+.level .node { position: absolute; left: 0; top: 27px; width: 15px; height: 15px; border-radius: 50%; border: 1px solid var(--ink); background: var(--paper); }
+.level.done .node { background: var(--seal); border-color: var(--seal); }
+.level.locked { opacity: 0.42; }
+.level .lname { font-size: 18px; font-weight: 300; display: flex; align-items: center; gap: 8px; }
+.level .lname .lock { width: 12px; height: 12px; }
+.level .moves { font-size: 12px; color: var(--ink-soft); margin: 4px 0 14px; letter-spacing: 0.02em; line-height: 1.4; }
+.mrow { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.mcard {
+  position: relative; display: flex; flex-direction: column; align-items: center; gap: 8px;
+  padding: 12px 6px 10px; background: var(--card); border-radius: 12px; transition: transform 160ms ease;
+}
+.mcard:active { transform: scale(0.96); }
+.mcard svg.thumb { width: 100%; height: 64px; }
+.mcard .mname { font-size: 12px; letter-spacing: 0.04em; }
+.mcard .stamp { position: absolute; top: 6px; right: 6px; width: 22px; height: 22px; }
+.mcard .resume { font-size: 10px; color: var(--ink-faint); letter-spacing: 0.06em; margin-top: -4px; }
+.level.locked .mcard { pointer-events: none; }
+
+/* Sheet (settings, install hint, confirm) */
+.scrim { position: absolute; inset: 0; background: rgba(27,27,27,0.28); opacity: 0; transition: opacity 220ms ease; }
+.scrim.in { opacity: 1; }
+.sheet {
+  position: absolute; left: 0; right: 0; bottom: 0; background: var(--paper); border-radius: 18px 18px 0 0;
+  padding: 18px 22px calc(var(--sab) + 22px); transform: translateY(100%); transition: transform 280ms var(--spring);
+  box-shadow: 0 -8px 30px rgba(0,0,0,0.08);
+}
+.sheet.in { transform: none; }
+.sheet .handle { width: 36px; height: 4px; border-radius: 2px; background: var(--rule); margin: 0 auto 16px; }
+.sheet h2 { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500; color: var(--ink-soft); margin-bottom: 8px; }
+.srow { display: flex; align-items: center; justify-content: space-between; min-height: 50px; border-top: 1px solid var(--rule); font-size: 15px; font-weight: 300; width: 100%; text-align: left; }
+.srow:last-child { border-bottom: 1px solid var(--rule); }
+.srow .val { color: var(--ink-soft); font-size: 13px; }
+.srow.danger { color: var(--seal); }
+.hint { display: flex; align-items: center; gap: 12px; }
+.hint p { flex: 1; font-size: 14px; line-height: 1.4; font-weight: 300; }
+.hint .ico { width: 22px; height: 22px; flex: none; }
+.confirm { display: flex; gap: 12px; margin-top: 16px; }
+.confirm button { flex: 1; height: 44px; border-radius: 22px; border: 1px solid var(--ink); font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; }
+.confirm button.danger { border-color: var(--seal); color: var(--seal); }
+
+/* Step screen */
+.stepscreen { padding: 0; touch-action: none; overflow: hidden; }
+.counter {
+  position: absolute; top: calc(var(--sat) + 14px); left: calc(var(--sal) + 20px); font-size: 12px; letter-spacing: 0.12em; font-variant-numeric: tabular-nums; z-index: 2;
+}
+.mtitle { position: absolute; top: calc(var(--sat) + 14px); right: calc(var(--sar) + 20px); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-soft); z-index: 2; }
+.deck { position: absolute; inset: 0; will-change: transform; }
+.deck.snap { transition: transform 260ms var(--spring); }
+.card {
+  position: absolute; top: calc(var(--sat) + 46px); bottom: calc(var(--sab) + 24px); left: calc(var(--sal) + 16px); right: calc(var(--sar) + 16px);
+  display: flex; flex-direction: column; background: var(--card); border-radius: 18px; overflow: hidden; will-change: transform;
+}
+.card .diagram { flex: 1; min-height: 0; padding: 14px 10px 4px; }
+.card .diagram svg { width: 100%; height: 100%; }
+.card .text { flex: none; padding: 6px 20px 22px; text-align: center; font-size: 19px; font-weight: 300; line-height: 1.35; min-height: 84px; }
+.card .text .tap { display: block; margin-top: 8px; font-size: 12px; color: var(--ink-faint); letter-spacing: 0.1em; text-transform: uppercase; }
+.card .text .credit { display: block; margin-top: 6px; font-size: 12px; color: var(--ink-soft); }
+.card.lesson { background: var(--paper-deep); }
+.card.lesson .label { text-align: center; padding-top: 18px; }
+.card.finish { align-items: center; justify-content: center; gap: 10px; text-align: center; padding: 24px; }
+.card.finish svg.big { width: 60%; height: 42%; }
+.card.finish .fname { font-size: 26px; font-weight: 300; }
+.card.finish .next { font-size: 14px; color: var(--ink-soft); margin-top: 12px; letter-spacing: 0.04em; }
+.card.finish .stampwrap { width: 84px; height: 84px; margin-top: 6px; }
+.card.finish .stampwrap svg { width: 100%; height: 100%; transform: scale(2.2) rotate(-18deg); opacity: 0; }
+.card.finish .stampwrap.land svg { animation: stampland 520ms cubic-bezier(0.2, 0.9, 0.3, 1.2) 220ms both; }
+@keyframes stampland { from { transform: scale(2.2) rotate(-18deg); opacity: 0; } 60% { opacity: 1; } to { transform: scale(1) rotate(-8deg); opacity: 1; } }
+.card.ask { align-items: center; justify-content: center; gap: 14px; text-align: center; padding: 24px; }
+.card.ask .q { font-size: 24px; font-weight: 300; }
+.card.ask .choices { display: flex; gap: 12px; margin-top: 10px; width: 100%; max-width: 300px; }
+.card.ask .choices button { flex: 1; height: 50px; border-radius: 25px; border: 1px solid var(--ink); font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; }
+.card.ask .choices button.filled { background: var(--ink); color: var(--paper); }
+
+/* Diagram strokes */
+.paper .edge { stroke: var(--ink); stroke-width: 1.7px; stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.paper .crease { stroke: rgba(27,27,27,0.42); stroke-width: 0.8px; vector-effect: non-scaling-stroke; }
+.symbols { transition: opacity 200ms ease; }
+.symbols.faded { opacity: 0.25; }
+.symbols .valley { stroke: var(--ink); stroke-width: 2.2px; stroke-dasharray: 7 5; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.symbols .mountain { stroke: var(--seal); stroke-width: 2.2px; stroke-dasharray: 8 4 1.5 4; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.symbols .hidden { stroke: var(--ink); stroke-width: 1.2px; stroke-dasharray: 1 3; stroke-linecap: round; vector-effect: non-scaling-stroke; fill: none; }
+.symbols .cut { stroke: var(--ink); stroke-width: 1.4px; stroke-dasharray: 3 3; vector-effect: non-scaling-stroke; }
+.symbols .arrow { stroke: var(--ink); stroke-width: 2.4px; fill: none; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.symbols .arrow.dashed { stroke-dasharray: 4 3; }
+.symbols .arrow-head { fill: var(--ink); stroke: var(--ink); stroke-width: 1.2px; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.symbols .arrow-head.hollow { fill: var(--card); }
+.symbols .dot { fill: var(--seal); }
+.sym-label { font-size: 5px; font-family: var(--font); fill: var(--ink-soft); letter-spacing: 0.04em; }
+.sym-label.small { font-size: 3.2px; }
+.inset-bg { fill: var(--paper); stroke: var(--rule); stroke-width: 0.6px; vector-effect: non-scaling-stroke; }
+
+/* Swipe hint */
+.swipehint { position: absolute; left: 50%; bottom: calc(var(--sab) + 120px); width: 120px; height: 60px; margin-left: -60px; pointer-events: none; z-index: 3; opacity: 0.85; }
+.swipehint .hand { animation: swipehand 1.8s ease-in-out infinite; transform-origin: center; }
+@keyframes swipehand { 0% { transform: translateX(34px); opacity: 0; } 20% { opacity: 1; } 70% { transform: translateX(-34px); opacity: 1; } 100% { transform: translateX(-40px); opacity: 0; } }
+
+/* Grid (dev) */
+.gridview { padding: 16px; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; overflow: auto; height: 100%; }
+.gridview .cell { background: var(--card); border-radius: 10px; padding: 8px; }
+.gridview .cell svg { width: 100%; height: 190px; }
+.gridview .cell p { font-size: 12px; text-align: center; padding: 6px 0 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .deck.snap { transition-duration: 1ms; }
+  .sheet, .scrim { transition-duration: 1ms; }
+  .swipehint .hand { animation-duration: 3.6s; }
+  .card.finish .stampwrap.land svg { animation-duration: 1ms; }
+  .fade-in { animation-duration: 1ms; }
+}
+.pcard .pp-handle { cursor: ew-resize; }
