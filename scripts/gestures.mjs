@@ -64,8 +64,11 @@ check('ArrowLeft -> previous', (await counter()) === '3 / 11', await counter());
 // No page scroll or zoom.
 const scroll = await page.evaluate(() => [window.scrollX, window.scrollY, document.documentElement.scrollTop, document.body.scrollTop]);
 check('no page scroll', scroll.every((v) => v === 0), JSON.stringify(scroll));
-const vp = await page.evaluate(() => ({ scale: window.visualViewport ? window.visualViewport.scale : 1, meta: document.querySelector('meta[name=viewport]').content }));
-check('no zoom', vp.scale === 1 && /user-scalable=no/.test(vp.meta), JSON.stringify(vp));
+// Double taps on the body are swallowed by touch-action: manipulation; the step screen blocks pinch with touch-action: none.
+await page.touchscreen.tap(cx, cy); await page.touchscreen.tap(cx, cy);
+await page.waitForTimeout(300);
+const vp = await page.evaluate(() => ({ scale: window.visualViewport ? window.visualViewport.scale : 1, bodyTouch: getComputedStyle(document.body).touchAction }));
+check('no zoom after double tap', vp.scale === 1 && vp.bodyTouch === 'manipulation', JSON.stringify(vp));
 const ta = await page.evaluate(() => getComputedStyle(document.querySelector('.stepscreen')).touchAction);
 check('step screen touch-action none', ta === 'none', ta);
 const ob = await page.evaluate(() => getComputedStyle(document.documentElement).overscrollBehavior || getComputedStyle(document.body).overscrollBehavior);
